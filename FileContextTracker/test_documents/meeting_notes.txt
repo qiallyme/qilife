@@ -1,0 +1,30 @@
+MEETING NOTES
+
+Date: June 18, 2024
+Meeting: Weekly Team Standup
+Attendees: Mike Chen, Lisa Rodriguez, David Kim, Jennifer Park
+
+Topics Discussed:
+
+1. Project Status Updates
+   - Acme Corporation project is 75% complete
+   - Beta Systems integration ahead of schedule
+   - CloudTech Solutions requires additional resources
+
+2. Resource Allocation
+   - Jennifer Park will lead the new TechFlow Industries project
+   - Mike Chen transitioning to support role for Acme
+
+3. Upcoming Deadlines
+   - Acme Corporation final deliverable: June 30
+   - Beta Systems testing phase: July 15
+   - TechFlow Industries kickoff: July 8
+
+4. Action Items
+   - Schedule client review with Acme Corporation
+   - Prepare proposal for TechFlow Industries expansion
+   - Update project timelines in tracking system
+
+Next meeting: June 25, 2024 at 10:00 AM
+
+Notes taken by: Lisa Rodriguez

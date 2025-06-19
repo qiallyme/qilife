@@ -1,0 +1,33 @@
+INVOICE DRAFT
+
+Invoice #: INV-2024-0156
+Date: June 19, 2024
+Due Date: July 19, 2024
+
+Bill To:
+Acme Corporation
+123 Business Park Drive
+Tech City, CA 90210
+
+Attention: Sarah Johnson
+Finance Department
+
+Services Rendered:
+- Consulting Services (May 2024): 120 hours @ $150/hour = $18,000
+- System Analysis and Design: $5,500
+- Database Migration Planning: $3,200
+- Staff Training Coordination: $2,800
+
+Subtotal: $29,500
+Tax (8.5%): $2,507.50
+Total Amount Due: $32,007.50
+
+Payment Terms: Net 30 days
+Payment Methods: Check, Wire Transfer, ACH
+
+Please remit payment to:
+Consulting Solutions LLC
+Account #: 1234567890
+Routing #: 987654321
+
+Thank you for your business!

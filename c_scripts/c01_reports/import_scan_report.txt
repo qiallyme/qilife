@@ -1,0 +1,488 @@
+
+❌ app.py
+   [Line 1] Invalid import: streamlit
+   [Line 2] Invalid import: os
+   [Line 3] Invalid import: threading
+   [Line 4] Invalid import: time
+   [Line 5] Invalid import: pathlib
+   [Line 6] Invalid import: datetime
+   [Line 7] Invalid import: dotenv
+   [Line 12] Invalid import: a_core.01_fileflow.111_monitor
+   [Line 13] Invalid import: a_core.07_data
+   [Line 14] Invalid import: a_core.05_vector_storage
+   [Line 15] Invalid import: 00_Core.01_fileflow
+   [Line 18] Invalid import: b_gui.010_components.13_folder_selector
+   [Line 19] Invalid import: b_gui.010_components.12_file_review
+   [Line 20] Invalid import: b_gui.010_components.13_activity_timeline
+   [Line 21] Invalid import: b_gui.010_components.14_log_export
+
+❌ b_gui\b02_gui_file_processor.py
+   [Line 1] Invalid import: sys
+   [Line 2] Invalid import: os
+   [Line 3] Invalid import: PyQt5.QtWidgets
+   [Line 14] Invalid import: PyQt5.QtCore
+
+❌ c_scripts\fix_imports_apply.py
+   [Line 2] Invalid import: re
+   [Line 3] Invalid import: pathlib
+
+❌ c_scripts\fix_imports_dryrun.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: re
+   [Line 3] Invalid import: pathlib
+
+❌ c_scripts\refactor_imports.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: re
+   [Line 3] Invalid import: pathlib
+
+❌ e_tests\e01_test_env.py
+   [Line 3] Invalid import: dotenv
+   [Line 4] Invalid import: os
+   [Line 17] Invalid import: openai
+   [Line 23] Invalid import: pytesseract
+   [Line 29] Invalid import: pdfplumber
+   [Line 35] Invalid import: notion_client
+   [Line 41] Invalid import: flask
+
+❌ e_tests\e0_config.py
+   [Line 1] Invalid import: os
+
+❌ e_tests\e991_diskfix.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: sys
+   [Line 3] Invalid import: struct
+   [Line 4] Invalid import: binascii
+
+❌ e_tests\e992_processor.py
+   [Line 2] Invalid import: os
+   [Line 3] Invalid import: logging
+   [Line 4] Invalid import: typing
+   [Line 5] Invalid import: .file_handler
+   [Line 6] Invalid import: .ai_service
+   [Line 7] Invalid import: .folder_manager
+
+❌ e_tests\e99_utils.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: json
+   [Line 3] Invalid import: logging
+   [Line 4] Invalid import: dotenv
+
+❌ j_tools\a01_file_manipulators\ja01_file_sorter_by_type.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: shutil
+
+❌ j_tools\a01_file_manipulators\ja02_html_to_xml_wiki_importer.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: glob
+   [Line 3] Invalid import: time
+   [Line 4] Invalid import: html2text
+   [Line 5] Invalid import: lxml
+   [Line 6] Invalid import: datetime
+
+❌ j_tools\a01_file_manipulators\ja03_move_screenshots.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: re
+   [Line 3] Invalid import: shutil
+
+❌ j_tools\a01_file_manipulators\ja04_move_to_type_folders.py
+   [Line 3] Invalid import: os
+   [Line 4] Invalid import: shutil
+   [Line 6] Invalid import: pathlib
+
+❌ j_tools\a01_file_manipulators\ja05_pdf_combine.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: PyPDF2
+   [Line 3] Invalid import: pathlib
+   [Line 8] Invalid import: winreg
+
+❌ j_tools\a01_file_manipulators\ja06_screenshots_to_pdf.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: datetime
+   [Line 3] Invalid import: shutil
+
+❌ j_tools\a01_file_manipulators\ja07_smart_file_renamer.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: re
+   [Line 3] Invalid import: datetime
+
+❌ j_tools\a01_file_manipulators\ja08_text_to_excel_converter.py
+   [Line 1] Invalid import: pandas
+
+❌ j_tools\b02_folder_manipulators\jb01_auto_create_type_folders.py
+   [Line 3] Invalid import: os
+
+❌ j_tools\b02_folder_manipulators\jb02_client_folder_renamer.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: re
+   [Line 3] Invalid import: csv
+   [Line 4] Invalid import: datetime
+
+❌ j_tools\b02_folder_manipulators\jb03_client_folder_renamer_dry.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: re
+   [Line 3] Invalid import: csv
+
+❌ j_tools\b02_folder_manipulators\jb04_directory_mapper.py
+   [Line 1] Invalid import: os
+
+❌ j_tools\b02_folder_manipulators\jb05_folder_name_cleaner.py
+   [Line 1] Invalid import: datetime
+   [Line 2] Invalid import: os
+   [Line 3] Invalid import: csv
+   [Line 4] Invalid import: re
+
+❌ j_tools\b02_folder_manipulators\jb06_hierarchical_folder_creator.py
+   [Line 1] Invalid import: os
+
+❌ j_tools\b02_folder_manipulators\jb07_project_folder_builder.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: json
+
+❌ j_tools\b02_folder_manipulators\jb08_smart_folder_merger.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: shutil
+   [Line 3] Invalid import: filecmp
+   [Line 4] Invalid import: re
+   [Line 5] Invalid import: json
+   [Line 6] Invalid import: time
+   [Line 7] Invalid import: pathlib
+   [Line 8] Invalid import: typing
+
+❌ j_tools\c03_ai\jc01_daily_digest_creator.py
+   [Line 1] Invalid import: logging
+   [Line 2] Invalid import: datetime
+   [Line 4] Invalid import: src.QiLifeFeed.notion_client
+
+❌ j_tools\c03_ai\jc02_gemini_tax_transaction_categorizer.py
+   [Line 1] Invalid import: pandas
+   [Line 2] Invalid import: os
+   [Line 3] Invalid import: dotenv
+   [Line 4] Invalid import: google
+   [Line 5] Invalid import: google.genai
+
+❌ j_tools\c03_ai\jc03_life_feed_ingester.py
+   [Line 1] Invalid import: logging
+
+❌ j_tools\c03_ai\jc04_ocr_metadata_extractor.py
+   [Line 1] Invalid import: pytesseract
+   [Line 2] Invalid import: PIL
+   [Line 3] Invalid import: os
+   [Line 4] Invalid import: datetime
+
+❌ j_tools\d04_loggers\jd01_device_event_watcher.py
+   [Line 13] Invalid import: re
+   [Line 14] Invalid import: sys
+   [Line 15] Invalid import: wmi
+   [Line 16] Invalid import: time
+
+❌ j_tools\d04_loggers\jd02_file_activity_monitor.py
+   [Line 1] Invalid import: time
+   [Line 2] Invalid import: watchdog.observers
+   [Line 3] Invalid import: watchdog.events
+   [Line 45] Invalid import: os
+
+❌ j_tools\d04_loggers\jd03_screen_capture_log.py
+   [Line 1] Invalid import: logging
+
+❌ j_tools\e05_index_dups\je01_directory_mapper.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: argparse
+   [Line 3] Invalid import: datetime
+
+❌ j_tools\e05_index_dups\je02_duplicate_file_cleaner.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: hashlib
+   [Line 3] Invalid import: time
+   [Line 4] Invalid import: shutil
+   [Line 5] Invalid import: collections
+   [Line 6] Invalid import: zipfile
+   [Line 7] Invalid import: re
+   [Line 8] Invalid import: datetime
+
+❌ j_tools\f06_configurators\jf01_api.py
+   [Line 1] Invalid import: logging
+   [Line 3] Invalid import: notion_client
+
+❌ j_tools\f06_configurators\jf02_notion_client.py
+   [Line 1] Invalid import: notion_client
+
+❌ j_tools\g07_utilities\jg01_diskfix.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: sys
+   [Line 3] Invalid import: struct
+   [Line 4] Invalid import: binascii
+   [Line 5] Invalid import: subprocess
+   [Line 6] Invalid import: re
+   [Line 7] Invalid import: json
+
+❌ j_tools\g07_utilities\jg02_nodes.py
+   [Line 1] Invalid import: datetime
+
+❌ j_tools\g07_utilities\jg03_notiondelpages.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: time
+   [Line 3] Invalid import: re
+
+❌ j_tools\e05_index_dups\jea_Dinexor\directory_mapper.py
+   [Line 1] Invalid import: flask
+   [Line 2] Invalid import: os
+   [Line 3] Invalid import: shutil
+   [Line 4] Invalid import: argparse
+   [Line 5] Invalid import: datetime
+   [Line 6] Invalid import: pytesseract
+   [Line 7] Invalid import: PIL
+   [Line 8] Invalid import: pdf2image
+   [Line 9] Invalid import: re
+   [Line 10] Invalid import: json
+   [Line 11] Invalid import: webbrowser
+   [Line 12] Invalid import: threading
+   [Line 13] Invalid import: importlib.util
+   [Line 14] Invalid import: subprocess
+   [Line 15] Invalid import: os
+
+❌ j_tools\e05_index_dups\jea_Dinexor\text_extraction.py
+   [Line 3] Invalid import: os
+   [Line 4] Invalid import: re
+   [Line 5] Invalid import: pytesseract
+   [Line 6] Invalid import: PIL
+   [Line 7] Invalid import: docx
+   [Line 8] Invalid import: bs4
+   [Line 9] Invalid import: concurrent.futures
+   [Line 10] Invalid import: logging_utils
+   [Line 11] Invalid import: utils
+   [Line 12] Invalid import: logging
+   [Line 13] Invalid import: pdfplumber
+
+❌ j_tools\e05_index_dups\jea_Dinexor\text_processing.py
+   [Line 2] Invalid import: os
+   [Line 3] Invalid import: re
+   [Line 4] Invalid import: nltk
+   [Line 5] Invalid import: nltk.corpus
+   [Line 6] Invalid import: nltk.tokenize
+   [Line 7] Invalid import: utils
+   [Line 8] Invalid import: logging
+   [Line 9] Invalid import: openai
+   [Line 10] Invalid import: openai
+   [Line 11] Invalid import: datetime
+   [Line 12] Invalid import: dotenv
+
+❌ b_gui\a_components\ba01_activity_timeline.py
+   [Line 1] Invalid import: streamlit
+   [Line 2] Invalid import: datetime
+   [Line 3] Invalid import: typing
+   [Line 4] Invalid import: json
+   [Line 8] Invalid import: pandas
+   [Line 14] Invalid import: core.database
+   [Line 15] Invalid import: utils.logging_utils
+   [Line 97] Invalid import: time
+
+❌ b_gui\a_components\ba02_file_review.py
+   [Line 1] Invalid import: streamlit
+   [Line 2] Invalid import: pathlib
+   [Line 3] Invalid import: typing
+   [Line 4] Invalid import: os
+   [Line 8] Invalid import: pandas
+   [Line 14] Invalid import: core.database
+   [Line 15] Invalid import: utils.file_utils
+
+❌ b_gui\a_components\ba03_folder_selector.py
+   [Line 1] Invalid import: streamlit
+   [Line 2] Invalid import: os
+   [Line 3] Invalid import: pathlib
+   [Line 4] Invalid import: typing
+   [Line 6] Invalid import: utils.file_utils
+
+❌ b_gui\a_components\ba04_log_export.py
+   [Line 1] Invalid import: streamlit
+   [Line 2] Invalid import: datetime
+   [Line 3] Invalid import: typing
+   [Line 4] Invalid import: json
+   [Line 5] Invalid import: csv
+   [Line 6] Invalid import: io
+   [Line 10] Invalid import: pandas
+   [Line 16] Invalid import: core.database
+   [Line 17] Invalid import: utils.logging_utils
+
+❌ a_core\a_fileflow\aa010_processor.py
+   [Line 3] Invalid import: os
+   [Line 4] Invalid import: .analyze
+   [Line 5] Invalid import: .rename
+   [Line 6] Invalid import: .filer
+   [Line 7] Invalid import: .folders_create
+
+❌ a_core\a_fileflow\aa011_monitor.py
+   [Line 1] Invalid import: time
+   [Line 2] Invalid import: watchdog.observers
+   [Line 3] Invalid import: watchdog.events
+   [Line 45] Invalid import: os
+
+❌ a_core\a_fileflow\aa012_file_monitor.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: time
+   [Line 3] Invalid import: threading
+   [Line 4] Invalid import: pathlib
+   [Line 5] Invalid import: watchdog.observers
+   [Line 6] Invalid import: watchdog.events
+   [Line 7] Invalid import: datetime
+   [Line 8] Invalid import: typing
+   [Line 10] Invalid import: .content_extractor
+   [Line 11] Invalid import: .ai_analyzer
+   [Line 12] Invalid import: .database
+   [Line 13] Invalid import: .vector_storage
+   [Line 14] Invalid import: .context_memory
+   [Line 15] Invalid import: utils.logging_utils
+
+❌ a_core\a_fileflow\aa013_routes.py
+   [Line 2] Invalid import: flask
+
+❌ a_core\a_fileflow\aa014_vector_storage.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: json
+   [Line 3] Invalid import: typing
+   [Line 4] Invalid import: pathlib
+   [Line 5] Invalid import: sqlite3
+   [Line 6] Invalid import: datetime
+   [Line 10] Invalid import: numpy
+   [Line 17] Invalid import: chromadb
+   [Line 18] Invalid import: chromadb.config
+   [Line 23] Invalid import: faiss
+   [Line 27] Invalid import: utils.logging_utils
+
+❌ a_core\a_fileflow\aa015_rename_client_folders.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: re
+   [Line 3] Invalid import: csv
+   [Line 4] Invalid import: datetime
+
+❌ a_core\a_fileflow\aa02_content_extractor.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: base64
+   [Line 3] Invalid import: pathlib
+   [Line 4] Invalid import: typing
+   [Line 5] Invalid import: mimetypes
+   [Line 9] Invalid import: PyPDF2
+   [Line 10] Invalid import: pdfplumber
+   [Line 17] Invalid import: docx
+   [Line 23] Invalid import: PIL
+   [Line 24] Invalid import: pytesseract
+   [Line 29] Invalid import: utils.logging_utils
+
+❌ a_core\a_fileflow\aa03_context_memory.py
+   [Line 1] Invalid import: json
+   [Line 2] Invalid import: typing
+   [Line 3] Invalid import: datetime
+   [Line 4] Invalid import: .database
+   [Line 5] Invalid import: utils.logging_utils
+   [Line 85] Invalid import: collections
+
+❌ a_core\a_fileflow\aa04_analyze.py
+   [Line 1] Invalid import: pytesseract
+   [Line 2] Invalid import: PIL
+   [Line 3] Invalid import: os
+   [Line 4] Invalid import: datetime
+
+❌ a_core\a_fileflow\aa05_database.py
+   [Line 1] Invalid import: sqlite3
+   [Line 2] Invalid import: json
+   [Line 3] Invalid import: typing
+   [Line 4] Invalid import: datetime
+   [Line 5] Invalid import: pathlib
+   [Line 6] Invalid import: threading
+   [Line 7] Invalid import: utils.logging_utils
+
+❌ a_core\a_fileflow\aa06_rename.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: re
+   [Line 3] Invalid import: datetime
+
+❌ a_core\a_fileflow\aa07_filer.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: shutil
+
+❌ a_core\a_fileflow\aa08_folders_create.py
+   [Line 3] Invalid import: os
+
+❌ a_core\a_fileflow\aa09_foldermerge.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: shutil
+   [Line 3] Invalid import: filecmp
+   [Line 4] Invalid import: re
+   [Line 5] Invalid import: json
+   [Line 6] Invalid import: time
+   [Line 7] Invalid import: pathlib
+   [Line 8] Invalid import: typing
+
+❌ a_core\a_fileflow\__init__.py
+   [Line 2] Invalid import: .routes
+
+❌ a_core\b_lifelog\ab01_capture.py
+   [Line 1] Invalid import: logging
+
+❌ a_core\b_lifelog\ab02_digest.py
+   [Line 1] Invalid import: logging
+   [Line 2] Invalid import: datetime
+   [Line 4] Invalid import: src.QiLifeFeed.notion_client
+
+❌ a_core\b_lifelog\ab03_ingest.py
+   [Line 1] Invalid import: logging
+
+❌ a_core\b_lifelog\ab04_spyme.py
+   [Line 1] Invalid import: pynput
+   [Line 2] Invalid import: time
+   [Line 3] Invalid import: os
+
+❌ a_core\b_lifelog\ab05_notion_client.py
+   [Line 1] Invalid import: notion_client
+
+❌ a_core\b_lifelog\ab06_notion_logger.py
+   [Line 1] Invalid import: notion_client
+   [Line 3] Invalid import: logging
+
+❌ a_core\c_qinote\ac01_nodes.py
+   [Line 1] Invalid import: datetime
+
+❌ a_core\c_qinote\ac03_api.py
+   [Line 1] Invalid import: logging
+   [Line 3] Invalid import: notion_client
+
+❌ a_core\c_qinote\ac04_notiondelpages.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: time
+   [Line 3] Invalid import: re
+
+❌ a_core\d_ai\ad01_analyzer.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: json
+   [Line 3] Invalid import: typing
+   [Line 4] Invalid import: datetime
+   [Line 5] Invalid import: pathlib
+   [Line 7] Invalid import: openai
+   [Line 8] Invalid import: .context_memory
+   [Line 9] Invalid import: utils.logging_utils
+
+❌ a_core\e_utils\ae01_file_utils.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: hashlib
+   [Line 3] Invalid import: shutil
+   [Line 4] Invalid import: pathlib
+   [Line 5] Invalid import: typing
+   [Line 6] Invalid import: datetime
+   [Line 7] Invalid import: mimetypes
+   [Line 180] Invalid import: math
+
+❌ a_core\e_utils\ae02_logging_utils.py
+   [Line 1] Invalid import: json
+   [Line 2] Invalid import: sqlite3
+   [Line 3] Invalid import: datetime
+   [Line 4] Invalid import: pathlib
+   [Line 5] Invalid import: typing
+   [Line 6] Invalid import: threading
+   [Line 245] Invalid import: csv
+   [Line 246] Invalid import: io
+
+❌ a_core\e_utils\ae03_utils2.py
+   [Line 1] Invalid import: os
+   [Line 2] Invalid import: json
+   [Line 3] Invalid import: logging
+   [Line 4] Invalid import: dotenv

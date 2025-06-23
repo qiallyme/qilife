@@ -1,0 +1,59 @@
+
+📝 j_tools\a01_file_manipulators\ja01_file_sorter_by_type.py
+   [Line 3] common.utils → a_core.e_utils.ae03_utils
+
+📝 j_tools\c03_ai\jc01_daily_digest_creator.py
+   [Line 3] common.utils → a_core.e_utils.ae03_utils
+
+📝 j_tools\c03_ai\jc03_life_feed_ingester.py
+   [Line 2] common.notion_logger → a_core.b_lifelog.ab06_notion_logger
+   [Line 3] common.utils → a_core.e_utils.ae03_utils
+
+📝 j_tools\d04_loggers\jd02_file_activity_monitor.py
+   [Line 4] common.utils → a_core.e_utils.ae03_utils
+   [Line 5] qifileflow.analyze → a_core.a_fileflow.aa04_analyze
+   [Line 6] qifileflow.rename → a_core.a_fileflow.aa06_rename
+   [Line 7] qifileflow.filer → a_core.a_fileflow.aa07_filer
+   [Line 8] common.notion_logger → a_core.b_lifelog.ab06_notion_logger
+   [Line 44] common.utils → a_core.e_utils.ae03_utils
+
+📝 j_tools\d04_loggers\jd03_screen_capture_log.py
+   [Line 2] common.utils → a_core.e_utils.ae03_utils
+   [Line 3] qilifefeed.ingest → a_core.b_lifelog.ab03_ingest
+
+📝 j_tools\f06_configurators\jf01_api.py
+   [Line 2] common.utils → a_core.e_utils.ae03_utils
+
+📝 j_tools\g07_utilities\jg04_templates.py
+   [Line 1] qinote.nodes → a_core.c_qinote.ac01_nodes
+
+📝 a_core\a_fileflow\aa011_monitor.py
+   [Line 4] common.utils → a_core.e_utils.ae03_utils
+   [Line 5] qifileflow.analyze → a_core.a_fileflow.aa04_analyze
+   [Line 6] qifileflow.rename → a_core.a_fileflow.aa06_rename
+   [Line 7] qifileflow.filer → a_core.a_fileflow.aa07_filer
+   [Line 8] common.notion_logger → a_core.b_lifelog.ab06_notion_logger
+   [Line 44] common.utils → a_core.e_utils.ae03_utils
+
+📝 a_core\a_fileflow\aa07_filer.py
+   [Line 3] common.utils → a_core.e_utils.ae03_utils
+
+📝 a_core\b_lifelog\ab01_capture.py
+   [Line 2] common.utils → a_core.e_utils.ae03_utils
+   [Line 3] qilifefeed.ingest → a_core.b_lifelog.ab03_ingest
+
+📝 a_core\b_lifelog\ab02_digest.py
+   [Line 3] common.utils → a_core.e_utils.ae03_utils
+
+📝 a_core\b_lifelog\ab03_ingest.py
+   [Line 2] common.notion_logger → a_core.b_lifelog.ab06_notion_logger
+   [Line 3] common.utils → a_core.e_utils.ae03_utils
+
+📝 a_core\b_lifelog\ab06_notion_logger.py
+   [Line 2] common.utils → a_core.e_utils.ae03_utils
+
+📝 a_core\c_qinote\ac02_templates.py
+   [Line 1] qinote.nodes → a_core.c_qinote.ac01_nodes
+
+📝 a_core\c_qinote\ac03_api.py
+   [Line 2] common.utils → a_core.e_utils.ae03_utils

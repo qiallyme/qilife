@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dinexor: Directory Processor</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Modern font */
+            margin: 20px;
+            background-color: #f8f8f8;
+            /* Very light gray */
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            /* Darker blue-gray */
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            /* Light divider */
+            padding-bottom: 10px;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            /* More pronounced shadow */
+            margin: 20px auto;
+            /* Centered */
+            max-width: 600px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            color: #555;
+            font-size: 0.9em;
+            /* Slightly smaller label */
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            /* Full width within container */
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-top: 5px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+            /* Important for padding */
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #3498db;
+            /* A brighter blue */
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+            /* Softer glow */
+            outline: none;
+        }
+
+        /* Custom Checkbox */
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        input[type="checkbox"] + label {
+            position: relative;
+            padding-left: 35px;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] + label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 25px;
+            height: 25px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+        }
+
+        input[type="checkbox"]:checked + label:before {
+            background-color: #3498db;
+        }
+
+        input[type="checkbox"]:checked + label:after {
+            content: '\f00c';
+            /* Font Awesome checkmark (you'd need to include Font Awesome) */
+            font-family: 'FontAwesome';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 16px;
+            color: white;
+        }
+
+        /* Deep Electric Blue Buttons */
+        button {
+            background-color: #3B5998;
+            color: white;
+            padding: 14px 25px;
+            /* Larger buttons */
+            margin-top: 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            /* More defined shadow */
+            font-size: 1.1em;
+            /* Slightly larger text */
+        }
+
+        button:hover {
+            background-color: #4c6bbd;
+            /* Slightly lighter shade */
+        }
+
+        button:active {
+            transform: scale(0.96);
+            /* More pronounced scale down */
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+            /* Smaller shadow when active */
+        }
+
+        #result {
+            margin-top: 25px;
+            font-weight: bold;
+            transition: color 0.3s ease, opacity 0.5s ease;
+            opacity: 1;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+
+        /* Progress Indicator (Animated) */
+        #progress {
+            margin-top: 15px;
+            font-size: 1em;
+            color: #777;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        #progress:empty {
+            opacity: 0;
+            height: 0;
+            /* Collapse when empty */
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    </head>
+
+<body>
+    <h1>Dinexor: Directory Processor</h1>
+
+    <div class="form-container">
+        <button onclick="runDefault()">Run Default</button><br><br>
+
+        <label for="sourceDir">Source Directory:</label>
+        <input type="text" id="sourceDir" size="50">
+
+        <label for="destDir">Destination Directory:</label>
+        <input type="text" id="destDir" size="50">
+
+        <label for="maxDepth">Max Depth (1-10, all):</label>
+        <input type="number" id="maxDepth" value="6" min="1" max="10">
+
+        <input type="checkbox" id="showFiles" checked>
+        <label for="showFiles">Show Files</label><br><br>
+
+        <button onclick="runProgram()">Run</button>
+
+        <p id="result"></p>
+        <p id="progress"></p>
+    </div>
+
+    <script>
+        // JavaScript functions (from previous response)
+        function browseDirectory(inputId) {
+            // Placeholder
+            alert("Browse functionality not implemented in this example.");
+        }
+
+        function runProgram() {
+            let sourceDir = document.getElementById('sourceDir').value;
+            let destDir = document.getElementById('destDir').value;
+            let showFiles = document.getElementById('showFiles').checked;
+            let maxDepth = document.getElementById('maxDepth').value;
+
+            if (!sourceDir) {
+                displayResult('Please enter a source directory.', true);
+                return;
+            }
+
+            displayProgress("Processing..."); // Show progress message
+
+            fetch('/run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sourceDir: sourceDir,
+                    destDir: destDir,
+                    showFiles: showFiles,
+                    maxDepth: maxDepth
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(error => {
+                            throw new Error(error.error || 'Server error');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayResult(data.result, false);
+                    displayProgress(""); // Clear progress
+                })
+                .catch(error => {
+                    displayResult('Error: ' + error.message, true);
+                    displayProgress(""); // Clear progress
+                });
+        }
+
+        function runDefault() {
+            displayProgress("Running default process..."); // Show progress message
+
+            fetch('/run_default', {
+                method: 'POST'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(error => {
+                            throw new Error('Server error');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayResult(data.result, false);
+                    displayProgress(""); // Clear progress
+                })
+                .catch(error => {
+                    displayResult('Error: ' + error.message, true);
+                    displayProgress(""); // Clear progress
+                });
+        }
+
+        function displayResult(message, isError) {
+            let resultElement = document.getElementById('result');
+            resultElement.innerText = message;
+            resultElement.style.color = isError ? 'red' : 'green';
+            resultElement.style.opacity = 1; // Ensure it's visible
+        }
+
+        function displayProgress(message) {
+            let progressElement = document.getElementById('progress');
+            progressElement.innerText = message;
+        }
+    </script>
+</body>
+
+</html>

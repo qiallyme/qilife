@@ -111,3 +111,12 @@
 
 ### ⏱ 2025-06-23 15:20:35
 - 📦 Launched from run_dev.py (desktop or script)
+
+### ⏱ 2025-07-01 06:09:35
+- 📦 Launched from run_dev.py (desktop or script)
+
+### ⏱ 2025-07-01 06:10:09
+- Adding vector storage and how to embedd data.
+
+### ⏱ 2025-07-01 06:10:19
+- 📦 Launched from run_dev.py (desktop or script)

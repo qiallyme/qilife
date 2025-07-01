@@ -26,3 +26,6 @@ tqdm
 dateparser
 unidecode
 filetype
+sentence-transformers
+qdrant-client
+openai

@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+"""
+Duplicate File Finder & Cleaner
+--------------------------------
+Scans a root directory (within an optional depth limit), finds files with
+identical content (hash match), lets you review them, then moves any copies
+you select into a dated “duplicates_pending_deletion” folder **and**
+simultaneously zips a backup for easy recovery.
+
+Author: Q / QiAlly
+Python 3.8+
+"""
+
 import os
 import hashlib
 import time
@@ -6,178 +19,211 @@ from collections import defaultdict
 from zipfile import ZipFile, ZIP_DEFLATED
 import re
 from datetime import datetime
+from pathlib import Path
+from typing import Dict, List
 
-def get_file_hash(file_path, algo='sha256', chunk_size=4096):
-    hash_func = hashlib.new(algo)
+# ──────────────────────────────────────────────────────────────────────────────
+# Helper functions
+# ──────────────────────────────────────────────────────────────────────────────
+def get_file_hash(file_path: str, algo: str = "sha256", chunk_size: int = 4096) -> str | None:
+    """Return hex digest of a file or None on error."""
+    h = hashlib.new(algo)
     try:
-        with open(file_path, 'rb') as f:
-            while True:
-                chunk = f.read(chunk_size)
-                if not chunk:
-                    break
-                hash_func.update(chunk)
-        return hash_func.hexdigest()
-    except Exception as e:
-        print(f"Error reading file {file_path}: {e}")
+        with open(file_path, "rb") as f:
+            for chunk in iter(lambda: f.read(chunk_size), b""):
+                h.update(chunk)
+        return h.hexdigest()
+    except OSError as exc:
+        print(f"[!] Error reading {file_path}: {exc}")
         return None
 
-def get_file_size(file_path):
+def get_file_size(file_path: str) -> int:
+    """Return file size or -1 on error."""
     try:
         return os.path.getsize(file_path)
-    except FileNotFoundError:
+    except OSError:
         return -1
 
-def find_duplicates(root_dir, depth_limit=3):
-    size_map = defaultdict(list)
-    total_files_scanned = 0
-
-    print(f"Scanning directory: {root_dir} (up to {depth_limit} levels deep)...")
+# ──────────────────────────────────────────────────────────────────────────────
+# Scanning & duplicate detection
+# ──────────────────────────────────────────────────────────────────────────────
+def find_duplicates(root_dir: str, depth_limit: int = 3) -> Dict[str, List[str]]:
+    """
+    Walk `root_dir`, group by size first, then by SHA-256 hash,
+    and return {hash: [file1, file2, …]} for true dupes.
+    """
+    print(f"\n🕵️  Scanning '{root_dir}' (depth ≤ {depth_limit}) …")
+    size_map: dict[int, list[str]] = defaultdict(list)
+    total = 0
 
     for root, _, files in os.walk(root_dir):
-        relative_depth = root[len(root_dir.rstrip(os.sep)) + 1:].count(os.sep)
-        if relative_depth > depth_limit:
+        rel_depth = Path(root).relative_to(root_dir).parts.__len__()  # depth from root_dir
+        if rel_depth > depth_limit:
             continue
+        for fname in files:
+            path = os.path.join(root, fname)
+            if os.path.islink(path):
+                continue
+            sz = get_file_size(path)
+            if sz >= 0:
+                size_map[sz].append(path)
+                total += 1
+                if total % 200 == 0:
+                    print(f"   …{total} files scanned", end="\r")
+    print(f"   → Completed file walk ({total} files).")
 
-        for file in files:
-            full_path = os.path.join(root, file)
-            file_size = get_file_size(full_path)
-            if file_size >= 0:
-                size_map[file_size].append(full_path)
-                total_files_scanned += 1
-                if total_files_scanned % 10 == 0:
-                    print(f"  - Scanned {total_files_scanned} files...", end='\r')
-    print(f"\nFinished initial scan. {total_files_scanned} files found.")
+    # candidates that share a size
+    candidates = {size: paths for size, paths in size_map.items() if len(paths) > 1}
+    if not candidates:
+        print("✅ No size-based candidates found.")
+        return {}
 
-    potential_duplicates_by_size = {
-        size: paths for size, paths in size_map.items() if len(paths) > 1
-    }
+    print(f"🔍 Hashing {sum(len(v) for v in candidates.values())} candidate files …")
+    hash_map: dict[str, list[str]] = defaultdict(list)
+    processed = 0
+    total_candidates = sum(len(v) for v in candidates.values())
+    for paths in candidates.values():
+        for p in paths:
+            h = get_file_hash(p)
+            if h:
+                hash_map[h].append(p)
+            processed += 1
+            if processed % 50 == 0:
+                pct = processed / total_candidates * 100
+                print(f"   …{processed}/{total_candidates} ({pct:4.1f} %)", end="\r")
 
-    hash_map = defaultdict(list)
-    files_hashed = 0
-    total_potential_duplicates = sum(len(paths) for paths in potential_duplicates_by_size.values())
-    print(f"\nChecking hashes of {total_potential_duplicates} potential duplicate files...")
-
-    for size, file_list in potential_duplicates_by_size.items():
-        for full_path in file_list:
-            file_hash = get_file_hash(full_path)
-            if file_hash:
-                hash_map[file_hash].append(full_path)
-                files_hashed += 1
-                if files_hashed % 10 == 0:
-                    progress = (files_hashed / total_potential_duplicates) * 100
-                    print(f"  - Hashed {files_hashed}/{total_potential_duplicates} files ({progress:.2f}%)...", end='\r')
-    print(f"\nFinished hashing potential duplicates.")
-
-    duplicates = {h: paths for h, paths in hash_map.items() if len(paths) > 1}
+    duplicates = {h: lst for h, lst in hash_map.items() if len(lst) > 1}
+    print(f"   → Hash pass complete. {len(duplicates)} duplicate group(s) found.")
     return duplicates
 
-def is_numbered_duplicate(file_path1, file_path2):
-    name1, ext1 = os.path.splitext(os.path.basename(file_path1))
-    name2, ext2 = os.path.splitext(os.path.basename(file_path2))
+# ──────────────────────────────────────────────────────────────────────────────
+# Name-based helper (photo.jpg ⇆ photo (1).jpg)
+# ──────────────────────────────────────────────────────────────────────────────
+_DUP_RE = re.compile(r"([-_ ]\(?\d+\)?| -? ?copy)$", re.IGNORECASE)
 
-    if ext1 != ext2:
+
+def _clean_name(fname: str) -> str:
+    return _DUP_RE.sub("", fname).strip()
+
+
+def is_numbered_duplicate(p1: str, p2: str) -> bool:
+    """Return True if filenames differ only by ‘(1)’, ‘-1’, ‘- Copy’, etc."""
+    n1, ext1 = os.path.splitext(os.path.basename(p1))
+    n2, ext2 = os.path.splitext(os.path.basename(p2))
+    if ext1.lower() != ext2.lower():
         return False
+    return _clean_name(n1) == _clean_name(n2) and n1 != n2
 
-    pattern = re.compile(r'(_\d+|\s\(\d+\))$')
-    return bool(pattern.sub('', name1) == pattern.sub('', name2) and name1 != name2)
 
-def handle_duplicates(root_dir, duplicates):
-    if not duplicates:
-        print("\nNo duplicate files found within the specified depth.")
+# ──────────────────────────────────────────────────────────────────────────────
+# Duplicate handling / quarantine
+# ──────────────────────────────────────────────────────────────────────────────
+def handle_duplicates(root_dir: str, dupes: Dict[str, List[str]]) -> None:
+    if not dupes:
+        print("🎉 Nothing to do; no real duplicates.")
         return
 
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    duplicates_folder = os.path.join(root_dir, f"duplicates_pending_deletion_{timestamp}")
-    os.makedirs(duplicates_folder, exist_ok=True)
-    backup_zip_path = os.path.join(root_dir, f"duplicate_backup_{timestamp}.zip")
-    indexed_file_path = os.path.join(root_dir, f"duplicate_index_{timestamp}.txt")
-    moved_count = 0
-    indexed_count = 0
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    quarantine = os.path.join(root_dir, f"duplicates_pending_deletion_{ts}")
+    backup_zip = os.path.join(root_dir, f"duplicate_backup_{ts}.zip")
+    index_txt = os.path.join(root_dir, f"duplicate_index_{ts}.txt")
+    os.makedirs(quarantine, exist_ok=True)
 
-    print(f"\n--- Potential Duplicate Files Found ---")
-    with open(indexed_file_path, 'w') as index_file:
-        for hash_val, files in duplicates.items():
-            if len(files) > 1:
-                print(f"\nDuplicate files with hash {hash_val}:")
-                index_file.write(f"Duplicate files with hash {hash_val}:\n")
-                numbered_duplicates = all(is_numbered_duplicate(files[i], files[j])
-                                          for i in range(len(files))
-                                          for j in range(i + 1, len(files)))
-                if numbered_duplicates:
-                    print("  (These appear to be numbered duplicates)")
-                else:
-                    print("  (Caution: These may not be simple numbered duplicates)")
+    # Write index & show summary
+    with open(index_txt, "w", encoding="utf-8") as idx:
+        for h, paths in dupes.items():
+            idx.write(f"Hash {h} ({len(paths)} files)\n")
+            for p in paths:
+                idx.write(f"   {p}\n")
+            idx.write("\n")
+    print(f"📄 Index of duplicates saved → {index_txt}")
 
-                for i, f in enumerate(files):
-                    print(f"  [{i + 1}] {f}")
-                    index_file.write(f"  [{i + 1}] {f}\n")
-                    indexed_count += 1
-                index_file.write("\n")
+    # Prompt
+    move_choice = input(
+        "\nMove all but one copy from each group into quarantine?  "
+        "[yes/no/select] ➜ "
+    ).strip().lower()
 
-    print(f"\nAn index of potential duplicate files has been saved to '{indexed_file_path}'.")
+    to_move: list[str] = []
 
-    while True:
-        confirmation = input(
-            "\nDo you want to move the duplicate copies (keeping one of each set) to the "
-            f"'{duplicates_folder}' folder? (yes/no/select): "
-        ).lower()
-
-        if confirmation == 'yes':
-            files_to_move = []
-            for hash_val, files in duplicates.items():
-                if len(files) > 1:
-                    files_to_move.extend(files[1:])
-            break
-        elif confirmation == 'no':
-            print("\nNo files will be moved.")
-            return
-        elif confirmation == 'select':
-            files_to_move = []
-            for hash_val, files in duplicates.items():
-                if len(files) > 1:
-                    print(f"\nSelect files to move for hash {hash_val}:")
-                    for i, f in enumerate(files):
-                        print(f"  [{i + 1}] {f}")
-                    while True:
-                        choices = input("Enter numbers of files to move (comma-separated): ")
-                        try:
-                            indices_to_move = [int(x.strip()) - 1 for x in choices.split(',')]
-                            valid_indices = all(0 <= idx < len(files) for idx in indices_to_move)
-                            if valid_indices:
-                                files_to_move.extend(files[i] for i in indices_to_move)
-                                break
-                            else:
-                                print("Invalid index. Try again.")
-                        except ValueError:
-                            print("Invalid input. Enter numbers only.")
-            break
-        else:
-            print("Invalid input. Please enter 'yes', 'no', or 'select'.")
-
-    if files_to_move:
-        print(f"\nMoving selected duplicate copies to '{duplicates_folder}'...")
-        with ZipFile(backup_zip_path, 'w', ZIP_DEFLATED) as backup_zip:
-            for file_to_move in files_to_move:
+    if move_choice == "yes":
+        for paths in dupes.values():
+            to_move.extend(paths[1:])  # keep first
+    elif move_choice == "select":
+        for h, paths in dupes.items():
+            print(f"\nHash {h}:")
+            for i, p in enumerate(paths, 1):
+                tag = "(auto-numbered)" if is_numbered_duplicate(paths[0], p) else ""
+                print(f"   [{i}] {p} {tag}")
+            pick = input("   Enter numbers to move (e.g. 2,3) or 'none': ").strip().lower()
+            if pick and pick != "none":
                 try:
-                    base_name = os.path.basename(file_to_move)
-                    new_path = os.path.join(duplicates_folder, base_name)
-
-                    counter = 1
-                    while os.path.exists(new_path):
-                        name, ext = os.path.splitext(base_name)
-                        new_path = os.path.join(duplicates_folder, f"{name}_{counter}{ext}")
-                        counter += 1
-
-                    shutil.move(file_to_move, new_path)
-                    backup_zip.write(new_path, arcname=os.path.relpath(new_path, root_dir))
-                    moved_count += 1
-                    print(f"  - Moved and backed up: '{file_to_move}' to '{new_path}' in '{backup_zip_path}'")
-                except Exception as e:
-                    print(f"  - Error moving '{file_to_move}': {e}")
-
-        print(f"\nSuccessfully moved and backed up {moved_count} duplicate files to '{duplicates_folder}' and '{backup_zip_path}'.")
-        print("\nIt is recommended to review the contents of the 'duplicates_pending_deletion' folder and the backup zip before permanently deleting anything.")
+                    idxs = [int(n) - 1 for n in pick.split(",") if n.strip()]
+                    to_move.extend(paths[i] for i in idxs if 0 <= i < len(paths))
+                except ValueError:
+                    print("   ✖️  Bad input; skipping this group.")
     else:
-        print("\nNo files were moved.")
+        print("↩️  No files moved.")
+        return
 
-    print("\n--- End of Duplicate Handling ---")
+    if not to_move:
+        print("↩️  Nothing selected.")
+        return
+
+    # Do moves + backup
+    moved = 0
+    with ZipFile(backup_zip, "w", ZIP_DEFLATED) as zf:
+        for src in set(to_move):  # deduplicate
+            base = os.path.basename(src)
+            dst = os.path.join(quarantine, base)
+            # ensure unique name in quarantine
+            stem, ext = os.path.splitext(base)
+            counter = 1
+            while os.path.exists(dst):
+                dst = os.path.join(quarantine, f"{stem}_{counter}{ext}")
+                counter += 1
+            try:
+                shutil.move(src, dst)
+                zf.write(dst, arcname=os.path.basename(dst))
+                moved += 1
+                print(f"   → {src} → {dst}")
+            except OSError as exc:
+                print(f"   ✖️  Could not move {src}: {exc}")
+
+    print(
+        f"\n✅ {moved} file(s) moved to {quarantine}\n"
+        f"🗜️  Backup ZIP created → {backup_zip}\n"
+        "Please review before permanent deletion."
+    )
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# CLI
+# ──────────────────────────────────────────────────────────────────────────────
+def main() -> None:
+    print("┌──────────────────────────────────────────────┐")
+    print("│  Duplicate File Finder & Cleaner (QiAlly)    │")
+    print("└──────────────────────────────────────────────┘\n")
+
+    try:
+        root = input("Root directory to scan (or 'exit'): ").strip()
+        if root.lower() == "exit":
+            return
+        if not os.path.isdir(root):
+            print(f"✖️  '{root}' is not a directory.")
+            return
+
+        depth_raw = input("Depth limit [default=3]: ").strip()
+        depth = int(depth_raw) if depth_raw.isdigit() else 3
+
+        t0 = time.time()
+        dupes = find_duplicates(root, depth)
+        print(f"\nScan finished in {time.time() - t0:,.1f} s.")
+        handle_duplicates(root, dupes)
+
+    except KeyboardInterrupt:
+        print("\n⏹️  Interrupted by user. Bye!")
+
+
+if __name__ == "__main__":
+    main()

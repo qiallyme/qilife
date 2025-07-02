@@ -24,7 +24,7 @@ try:
 except ImportError:
     faiss = None
 
-from utils.logging_utils import LoggingUtils
+from a_core.e_utils.ae02_logging_utils import LoggingUtils
 
 class VectorStorage:
     """Vector database for semantic storage and search"""

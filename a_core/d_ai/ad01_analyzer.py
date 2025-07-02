@@ -5,8 +5,8 @@ from datetime import datetime
 from pathlib import Path
 
 from openai import OpenAI
-from .context_memory import ContextMemory
-from utils.logging_utils import LoggingUtils
+from a_core.a_fileflow.aa03_context_memory import ContextMemory
+from a_core.e_utils.ae02_logging_utils import LoggingUtils
 
 class AIAnalyzer:
     """AI-powered content analysis and file naming"""

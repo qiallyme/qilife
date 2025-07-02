@@ -1,10 +1,10 @@
 # fileflow/core/processor.py
 
 import os
-from .analyze import extract_metadata
-from .rename import generate_filename
-from .filer import move_file_to_destination
-from .folders_create import ensure_folder_exists
+from a_core.a_fileflow.aa07_filer import move_file
+from a_core.a_fileflow.aa08_folders_create import create_folders_by_type
+from a_core.a_fileflow.aa02_content_extractor import ContentExtractor
+from a_core.d_ai.ad01_analyzer import AIAnalyzer
 # from notion_logger import log_to_notion  # future step
 
 def run_full_pipeline(file_path):
@@ -15,13 +15,13 @@ def run_full_pipeline(file_path):
     print(f"🚀 Starting pipeline for: {file_path}")
 
     # Step 1: Analyze
-    metadata = extract_metadata(file_path)
+    metadata = ContentExtractor().extract_content(file_path)
     if not metadata:
         print("⚠️ Failed to extract metadata.")
         return
 
     # Step 2: Rename
-    new_filename = generate_filename(file_path, metadata)
+    new_filename = AIAnalyzer().analyze_file_content(file_path, metadata)
     new_path = os.path.join(os.path.dirname(file_path), new_filename)
     os.rename(file_path, new_path)
     print(f"✏️ Renamed to: {new_filename}")
@@ -32,10 +32,10 @@ def run_full_pipeline(file_path):
         destination_folder = "intermediate_files/to_review"
 
     # Step 4: Create folder if needed
-    ensure_folder_exists(destination_folder)
+    create_folders_by_type(destination_folder)
 
     # Step 5: Move file
-    final_path = move_file_to_destination(new_path, destination_folder)
+    final_path = move_file(new_path, destination_folder)
     print(f"📁 Moved to: {final_path}")
 
     # Step 6: Log to Notion (placeholder)

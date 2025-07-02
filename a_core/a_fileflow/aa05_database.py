@@ -4,7 +4,7 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from pathlib import Path
 import threading
-from utils.logging_utils import LoggingUtils
+from a_core.e_utils.ae02_logging_utils import LoggingUtils
 
 class DatabaseManager:
     """Manage SQLite database for file analysis and metadata"""

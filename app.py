@@ -5,14 +5,15 @@ import time
 from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv
+from a_core.e_utils.config_manager import get_config, update_config
 
 load_dotenv()
 
 # Import core modules
 from a_core.a_fileflow.aa011_monitor import FileMonitor
-from a_core.f_data import af01_second_brain
-from f_vector_db import Vectors
-from a_core.a_fileflow import aa03_context_memory
+from a_core.a_fileflow.aa010_processor import run_full_pipeline
+from a_core.a_fileflow.aa014_vector_storage import VectorStorage
+from a_core.a_fileflow.aa03_context_memory import ContextMemory
 
 # Import components
 from b_gui.a_components.ba03_folder_selector import FolderSelector
@@ -100,50 +101,11 @@ def main():
     elif page == "Settings":
         render_settings()
 
-def start_monitoring(folder_path):
-    """Start file monitoring for the selected folder"""
-    try:
-        st.session_state.file_monitor = FileMonitor(
-            folder_path=folder_path,
-            db_manager=st.session_state.db_manager,
-            vector_storage=st.session_state.vector_storage,
-            context_memory=st.session_state.context_memory
-        )
-        
-        # Start monitoring in a separate thread
-        monitor_thread = threading.Thread(
-            target=st.session_state.file_monitor.start_monitoring,
-            daemon=True
-        )
-        monitor_thread.start()
-        
-        st.session_state.monitoring_active = True
-        st.session_state.selected_folder = folder_path
-        st.success(f"Started monitoring: {folder_path}")
-        
-    except Exception as e:
-        st.error(f"Failed to start monitoring: {str(e)}")
-
-def stop_monitoring():
-    """Stop file monitoring"""
-    try:
-        if st.session_state.file_monitor:
-            st.session_state.file_monitor.stop_monitoring()
-            st.session_state.file_monitor = None
-        
-        st.session_state.monitoring_active = False
-        st.session_state.selected_folder = None
-        st.success("Monitoring stopped")
-        st.rerun()
-        
-    except Exception as e:
-        st.error(f"Failed to stop monitoring: {str(e)}")
-
 def render_settings():
     """Render the settings page"""
     st.header("⚙️ Settings")
     
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     
     with col1:
         st.subheader("Database Information")
@@ -174,6 +136,20 @@ def render_settings():
                 st.success("Vector index rebuilt successfully")
             except Exception as e:
                 st.error(f"Failed to rebuild index: {str(e)}")
+    with col3:
+        st.subheader("API Keys")
+        config = get_config()
+        current_key = config.get("OPENAI_API_KEY", "")
+        new_key = st.text_input("OpenAI API Key", value=current_key, type="password")
+
+        if st.button("Save API Key"):
+            try:
+                update_config("OPENAI_API_KEY", new_key)
+                load_dotenv(override=True)
+                st.success("✅ OpenAI API Key saved to .env successfully")
+            except Exception as e:
+                st.error(f"❌ Failed to save key: {e}")
+               
 
 if __name__ == "__main__":
     main()

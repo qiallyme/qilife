@@ -2,8 +2,8 @@ import streamlit as st
 import os
 from pathlib import Path
 from typing import Optional
-
-from utils.file_utils import FileUtils
+from a_core.e_utils.ae01_file_utils import FileUtils
+from a_core.e_utils.ae02_logging_utils import LoggingUtils
 
 class FolderSelector:
     """Component for selecting and managing folder monitoring"""

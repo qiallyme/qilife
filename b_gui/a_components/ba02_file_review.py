@@ -11,8 +11,8 @@ except ImportError:
     PANDAS_AVAILABLE = False
     pd = None
 
-from core.database import DatabaseManager
-from utils.file_utils import FileUtils
+from a_core.a_fileflow.aa05_database import DatabaseManager
+from a_core.e_utils.ae01_file_utils import FileUtils
 
 class FileReview:
     """Component for reviewing and approving file rename suggestions"""

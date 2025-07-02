@@ -11,8 +11,8 @@ except ImportError:
     PANDAS_AVAILABLE = False
     pd = None
 
-from core.database import DatabaseManager
-from utils.logging_utils import LoggingUtils
+from a_core.a_fileflow.aa05_database import DatabaseManager
+from a_core.e_utils.ae02_logging_utils import LoggingUtils
 
 class ActivityTimeline:
     """Component for displaying activity timeline and system logs"""

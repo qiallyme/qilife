@@ -26,7 +26,7 @@ except ImportError:
     Image = None
     pytesseract = None
 
-from e_utils import LoggingUtils
+from a_core.e_utils.ae02_logging_utils import LoggingUtils
 
 class ContentExtractor:
     """Extract content from various file formats"""

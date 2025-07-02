@@ -4,6 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, Optional
 import threading
+import logging
 
 class LoggingUtils:
     """Centralized logging utility for the Second Brain system"""

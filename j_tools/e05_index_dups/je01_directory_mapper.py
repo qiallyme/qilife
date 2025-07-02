@@ -2,7 +2,7 @@ import os
 import argparse
 from datetime import datetime
 
-def print_directory_tree(root_dir, show_files=True, max_depth=None, current_depth=0, prefix='', log_file=None, include_hidden=True):
+def print_directory_tree(root_dir, show_files=True, max_depth=None, current_depth=0, prefix='', log_file=None, include_hidden=True, exclude_dirs=None):
     """
     Recursively prints the directory tree structure up to the specified depth and writes to a log file.
 
@@ -13,7 +13,10 @@ def print_directory_tree(root_dir, show_files=True, max_depth=None, current_dept
     - current_depth (int): Current depth level in the recursion.
     - prefix (str): The prefix string used for indentation and connectors.
     - log_file (file object): The file to write the log output.
+    - exclude_dirs (list): List of directory names to exclude from traversal.
     """
+    if exclude_dirs is None:
+        exclude_dirs = ['venv','__pycache__','data','logs','.git','.vscode','.idea','.pytest_cache','.venv','.DS_Store','.env','.env.local','.env.development.local','.env.test.local','.env.production.local']
     if max_depth is not None and current_depth >= max_depth:
         return
 
@@ -38,6 +41,9 @@ def print_directory_tree(root_dir, show_files=True, max_depth=None, current_dept
     directories = [item for item in items if os.path.isdir(os.path.join(root_dir, item))]
     files = [item for item in items if not os.path.isdir(os.path.join(root_dir, item))]
     
+    # Exclude directories in exclude_dirs
+    directories = [item for item in directories if item not in exclude_dirs]
+
     if not show_files:
         items = directories
     else:
@@ -45,7 +51,7 @@ def print_directory_tree(root_dir, show_files=True, max_depth=None, current_dept
 
     # Iterate over items with enumeration to identify the last item
     for index, item in enumerate(items):
-        if not include_hidden and item.startswith('.'): #skip hidden files
+        if not include_hidden and item.startswith('.'):
             continue
         path = os.path.join(root_dir, item)
         # Determine the connector based on position
@@ -63,8 +69,8 @@ def print_directory_tree(root_dir, show_files=True, max_depth=None, current_dept
             log_file.write(message + "\n")
 
         # If the item is a directory, recurse into it
-        if os.path.isdir(path):
-            print_directory_tree(path, show_files, max_depth, current_depth + 1, prefix + extension, log_file)
+        if os.path.isdir(path) and (item not in exclude_dirs):
+            print_directory_tree(path, show_files, max_depth, current_depth + 1, prefix + extension, log_file, include_hidden, exclude_dirs)
 
 def parse_arguments():
     """
@@ -189,7 +195,7 @@ def main(root_dir):
         print(f"Log file created: {log_file_tree.name}")
         print(f"Resolved path: {root_dir}")
         log_file_tree.write(f"Resolved path: {root_dir}\n")
-        print_directory_tree(root_dir, show_files, max_depth, log_file=log_file_tree)
+        print_directory_tree(root_dir, show_files, max_depth, log_file=log_file_tree, exclude_dirs=['venv','__pycache__','data','logs','.git','.vscode','.idea','.pytest_cache','.venv','.DS_Store','.env','.env.local','.env.development.local','.env.test.local','.env.production.local'])
         log_file_tree.close()
         print(f"Directory structure logged in: {log_file_tree.name}")
 

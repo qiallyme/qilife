@@ -2,14 +2,14 @@ import json
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from a_core.a_fileflow.aa05_database import DatabaseManager
-from a_core.e_utils import ae02_logging_utils  
+from a_core.e_utils.ae02_logging_utils import LoggingUtils
 
 class ContextMemory:
     """Maintain context and consistency across document processing"""
     
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
-        self.logger = ae02_logging_utils()
+        self.logger = LoggingUtils()
         
         # Entity consistency tracking
         self.entity_cache = {}

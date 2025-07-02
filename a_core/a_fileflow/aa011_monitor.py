@@ -10,9 +10,9 @@ from typing import Optional
 from a_core.a_fileflow.aa02_content_extractor import ContentExtractor
 from a_core.d_ai.ad01_analyzer import AIAnalyzer
 from a_core.a_fileflow.aa05_database import DatabaseManager
-from a_core.a_fileflow import VectorStorage
-from a_core.a_fileflow import ContextMemory
-from a_core.e_utils import LoggingUtils
+from a_core.a_fileflow.aa014_vector_storage import VectorStorage
+from a_core.a_fileflow.aa03_context_memory import ContextMemory
+from a_core.e_utils.ae02_logging_utils import LoggingUtils
 
 class FileEventHandler(FileSystemEventHandler):
     """Handle file system events for monitoring"""
